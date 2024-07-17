@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos Ingredientes</title>
+
+    <style>
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+        th, td {
+          padding: 8px;
+          text-align: left;
+          border-bottom: 1px solid #DDD;
+        }
+        tr:hover {background-color: #D6EEEE;}
+    </style>
+
+</head>
+<body>
+<h1>Lista de Productos por Ingrediente</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Producto</th>
+        <th>Ingrediente</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in items%}
+    <tr>
+        <td>{{item.id}}</td>
+        <td>{{item.id_productos}}</td>
+        <td>{{item.id_ingredientes}}</td>
+        <!--td>{{item.producto.nombre}}</td>
+        <td>{{item.ingrediente.nombre}}</td-->
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>
