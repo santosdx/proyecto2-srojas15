@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Home</title>
+</head>
+<body>
+<h1>Menú</h1>
+<table  class="w3-table-all w3-hoverable">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Producto</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in items%}
+    <tr>
+        <td>{{item.id}}</td>
+        <td>{{item.nombre}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<br>
+<br>
+<form action="/heladeria" method="post">
+    <table>
+        <thead>
+        <tr>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><label for="idProducto">Id producto:</label></td>
+            <td><input type="text" name="idProducto" id="idProducto" required></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button type="submit">vender</button></td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+</body>
+</html>
