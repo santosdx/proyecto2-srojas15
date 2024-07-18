@@ -1,10 +1,10 @@
 from db import db
 
-class Perros(db.Model):
+
+class ProductosIngredientes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    id_guarderia = db.Column(db.Integer, db.ForeignKey("guarderias.id"), nullable=False)
-    id_cuidador = db.Column(db.Integer, db.ForeignKey("cuidadores.id"), nullable=False)
-    nombre = db.Column(db.String(45), nullable=False)
-    raza = db.Column(db.String(45), nullable=False)
-    edad = db.Column(db.Integer, nullable=False)
-    peso = db.Column(db.Float, nullable=False)
+    id_productos = db.Column(db.Integer, db.ForeignKey("productos.id"), nullable=False)
+    id_ingredientes = db.Column(db.Integer, db.ForeignKey("ingredientes.id"), nullable=False)
+
+    producto = db.relationship('Productos', foreign_keys=[id_productos])
+    ingrediente = db.relationship('Ingredientes', foreign_keys=[id_ingredientes])

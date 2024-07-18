@@ -20,11 +20,12 @@
 
 </head>
 <body>
-<h1>Lista de Productos por Ingrediente</h1>
+<h1>Lista de Productos con sus Ingrediente</h1>
 <table>
     <thead>
     <tr>
         <th>ID</th>
+        <th>ID Producto</th>
         <th>Producto</th>
         <th>Ingrediente</th>
     </tr>
@@ -33,10 +34,9 @@
     {% for item in items%}
     <tr>
         <td>{{item.id}}</td>
-        <td>{{item.id_productos}}</td>
-        <td>{{item.id_ingredientes}}</td>
-        <!--td>{{item.producto.nombre}}</td>
-        <td>{{item.ingrediente.nombre}}</td-->
+        <td>{{item.producto.id}}</td>
+        <td>{{item.producto.nombre}}</td>
+        <td>{{item.ingrediente.nombre}}</td>
     </tr>
     {% endfor %}
     </tbody>

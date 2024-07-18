@@ -4,6 +4,9 @@ from flask_restful import Api
 from dotenv import load_dotenv
 from db import db
 from controllers.info_controller import InfoController
+from controllers.productos_controller import ProductosController
+from controllers.ingredientes_controller import IngredientesController
+from controllers.productos_ingredientes_controller import ProductosIngredientesController
 
 load_dotenv()
 
@@ -24,3 +27,6 @@ def main():
 
 
 api.add_resource(InfoController, '/info')
+api.add_resource(ProductosController, '/productos')
+api.add_resource(IngredientesController, '/ingredientes')
+api.add_resource(ProductosIngredientesController, '/productos_ingredientes')

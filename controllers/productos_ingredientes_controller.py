@@ -1,15 +1,10 @@
 from flask import render_template, make_response
 from flask_restful import Resource
-from models.productos import Productos
+from models.productos_ingredientes import ProductosIngredientes
 
 
-class ProductosController(Resource):
+class ProductosIngredientesController(Resource):
 
     def get(self):
-        items = Productos.query.all()
-        for item in items:
-            if item.vaso is None:
-                item.vaso = ""
-            if item.volumen is None:
-                item.volumen = ""
-        return make_response(render_template("productos.html", items=items))
+        items = ProductosIngredientes.query.all()
+        return make_response(render_template("productos_ingredientes.html", items=items))
