@@ -9,3 +9,6 @@ class Ingredientes(db.Model):
     vegetariano = db.Column(db.Boolean(), nullable=False)
     inventario = db.Column(db.Float(), nullable=False)
     sabor = db.Column(db.String(), nullable=True)
+
+    def __str__(self):
+        return self.name

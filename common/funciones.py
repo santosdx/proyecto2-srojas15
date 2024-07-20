@@ -60,7 +60,7 @@ def producto_costo_produccion(datos_ingredientes: list) -> float:
     """
     costo = 0
     for ingrediente in datos_ingredientes:
-        costo = costo + float(ingrediente.get_precio())
+        costo = costo + float(ingrediente.ingredientes.precio)
     return costo
 
 
@@ -102,8 +102,9 @@ def producto_mas_rentable(datos_productos: list) -> str:
     :return: Productos más rentables.
     """
     lst_productos = []
-    max_rentabilidad = max(datos_productos, key=lambda x: x.calcular_rentabilidad())
+    max_rentabilidad = max(datos_productos, key=lambda x: producto_rentabilidad(x.precio, x.ingredientes))
     for producto in datos_productos:
-        if producto.calcular_rentabilidad() == max_rentabilidad.calcular_rentabilidad():
-            lst_productos.append(producto.get_nombre())
+        if (producto_rentabilidad(producto.precio, producto.ingredientes) ==
+                producto_rentabilidad(max_rentabilidad.precio, max_rentabilidad.ingredientes)):
+            lst_productos.append(producto.nombre)
     return str(lst_productos)

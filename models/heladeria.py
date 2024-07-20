@@ -1,6 +1,7 @@
 import common.funciones as funciones
 from models.productos import Productos
 from models.ingredientes import Ingredientes
+from db import db
 
 """
 Clase que contiene los atributos y funciones propias de la Heladeria.
@@ -22,33 +23,46 @@ class Heladeria:
     def producto_mas_rentable(self) -> str:
         return funciones.producto_mas_rentable(self.__lista_productos)
 
-    def vender(self, nombre_producto: str) -> bool:
-        resultado = False
+    def vender(self, nombre_producto: str) -> str:
+        resultado = ""
         producto_vender = None
+        msn_error = ""
         for producto in self.__lista_productos:
             if producto.nombre == nombre_producto:
                 producto_vender = producto
+                break
         if producto_vender is not None:
             lista_ingredientes = producto_vender.ingredientes
             ingredientes_completos = True
-            for ingrediente in lista_ingredientes:
-                "Validamos para cada ingrediente el inventario"
-                if ingrediente.sabor is not None and ingrediente.inventario < 1:
-                    ingredientes_completos = False
-                    break
-                if ingrediente.sabor is None and ingrediente.inventario < 0.2:
-                    ingredientes_completos = False
-                    break
-            if ingredientes_completos:
-                "Como los ingredientes cumplen el inventario, entonces descontamos."
+            lista_ingredientes_sin_inventario = []
+            if len(lista_ingredientes) > 0:
                 for ingrediente in lista_ingredientes:
-                    "Descontamos del inventario"
-                    if ingrediente.sabor is not None and ingrediente.inventario >= 1:
-                        ingrediente.inventario = (ingrediente.inventario - 1)
-                    if ingrediente.sabor is None and ingrediente.inventario >= 0.2:
-                        ingrediente.inventario = (ingrediente.inventario - 0.2)
-                self.__venta_del_dia = self.__venta_del_dia + producto_vender.precio
-                resultado = True
+                    "Validamos para cada ingrediente el inventario"
+                    if ingrediente.ingrediente.sabor is not None and ingrediente.ingrediente.inventario < 1:
+                        ingredientes_completos = False
+                        lista_ingredientes_sin_inventario.append(ingrediente.ingrediente.nombre)
+                    if ingrediente.ingrediente.sabor is None and ingrediente.ingrediente.inventario < 0.2:
+                        ingredientes_completos = False
+                        lista_ingredientes_sin_inventario.append(ingrediente.ingrediente.nombre)
+
+                if ingredientes_completos:
+                    "Como los ingredientes cumplen el inventario, entonces descontamos."
+                    for ingrediente in lista_ingredientes:
+                        "Descontamos del inventario"
+                        if ingrediente.ingrediente.sabor is not None and ingrediente.ingrediente.inventario >= 1:
+                            ingrediente.ingrediente.inventario = (ingrediente.ingrediente.inventario - 1)
+                        if ingrediente.ingrediente.sabor is None and ingrediente.ingrediente.inventario >= 0.2:
+                            ingrediente.ingrediente.inventario = (ingrediente.ingrediente.inventario - 0.2)
+                    db.session.commit()
+                    self.__venta_del_dia = self.__venta_del_dia + producto_vender.precio
+                    resultado = "¡Vendido!"
+                else:
+                    msn_error = "¡Oh no! Nos hemos quedado sin: {0}".format(lista_ingredientes_sin_inventario)
+                    raise ValueError(msn_error)
+            else:
+                msn_error = "El producto no tiene ingredientes asignados."
+                raise ValueError(msn_error)
+
         return resultado
 
     def lista_productos(self):

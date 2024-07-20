@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, render_template
 from flask_restful import Api
 from dotenv import load_dotenv
 from db import db
@@ -9,6 +9,7 @@ from controllers.heladeria_controller import HeladeriaController
 from controllers.productos_controller import ProductosController
 from controllers.ingredientes_controller import IngredientesController
 from controllers.productos_ingredientes_controller import ProductosIngredientesController
+from models.heladeria import Heladeria
 
 load_dotenv()
 
@@ -26,6 +27,18 @@ api = Api(app)
 @app.route("/")
 def main():
     return "Bienvenidos..."
+
+@app.route("/index")
+def menu():
+    heladeria = Heladeria("La Heladeria")
+    items = heladeria.lista_productos()
+    return render_template("index.html", items=items)
+
+@app.route("/ingredientes")
+def lst_ingredientes():
+    heladeria = Heladeria("La Heladeria")
+    items = heladeria.lista_ingredientes()
+    return render_template("ingredientes.html", items=items)
 
 
 api.add_resource(InfoController, '/info')
