@@ -1,17 +1,11 @@
 from flask import render_template, make_response
 from flask_restful import Resource
-from models.ingredientes import Ingredientes
+from models.heladeria import Heladeria
 
 
 class IngredientesController(Resource):
 
     def get(self):
-        items = Ingredientes.query.all()
-        for item in items:
-            if item.vegetariano:
-                item.vegetariano = "Si"
-            else:
-                item.vegetariano = "No"
-            if item.sabor is None:
-                item.sabor = ""
+        heladeria = Heladeria("La Heladeria")
+        items = heladeria.lista_ingredientes()
         return make_response(render_template("ingredientes.html", items=items))
