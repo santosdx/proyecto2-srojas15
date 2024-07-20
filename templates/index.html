@@ -18,6 +18,7 @@
     <tr>
         <th>ID</th>
         <th>Producto</th>
+        <th>Disponible</th>
     </tr>
     </thead>
     <tbody>
@@ -25,6 +26,11 @@
     <tr>
         <td>{{item.id}}</td>
         <td>{{item.nombre}}</td>
+        {% if item.ingredientes|length > 0 %}
+        <td>Si</td>
+        {% else %}
+        <td>No</td>
+        {% endif %}
     </tr>
     {% endfor %}
     </tbody>
