@@ -27,8 +27,6 @@ class HeladeriaController(Resource):
 
         print("id:", id_producto)
         heladeria = Heladeria("La Heladeria")
-        prod_mas_rentable = heladeria.producto_mas_rentable()
-        print("Producto mas rentable:", prod_mas_rentable)
 
         lista_productos = heladeria.lista_productos()
         for producto in lista_productos:

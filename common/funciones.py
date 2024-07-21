@@ -60,7 +60,7 @@ def producto_costo_produccion(datos_ingredientes: list) -> float:
     """
     costo = 0
     for ingrediente in datos_ingredientes:
-        costo = costo + float(ingrediente.ingredientes.precio)
+        costo = costo + float(ingrediente.precio)
     return costo
 
 

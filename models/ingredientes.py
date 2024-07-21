@@ -1,4 +1,5 @@
 from db import db
+from models.productos_ingredientes import ProductosIngredientes
 
 
 class Ingredientes(db.Model):
@@ -10,5 +11,10 @@ class Ingredientes(db.Model):
     inventario = db.Column(db.Float(), nullable=False)
     sabor = db.Column(db.String(), nullable=True)
 
-    def __str__(self):
-        return self.name
+    def __init__(self, nombre: str, precio: float, calorias: int, vegetariano: bool, inventario: float, sabor: str):
+        self.nombre = nombre
+        self.precio = precio
+        self.calorias = calorias
+        self.vegetariano = vegetariano
+        self.inventario = inventario
+        self.sabor = sabor

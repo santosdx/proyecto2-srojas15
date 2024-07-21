@@ -8,3 +8,7 @@ class ProductosIngredientes(db.Model):
 
     producto = db.relationship('Productos', foreign_keys=[id_productos])
     ingrediente = db.relationship('Ingredientes', foreign_keys=[id_ingredientes])
+
+    def __init__(self, id_productos: int, id_ingredientes: int):
+        self.id_productos = id_productos
+        self.id_ingredientes = id_ingredientes
