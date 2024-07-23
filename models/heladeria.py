@@ -26,7 +26,6 @@ class Heladeria:
     def vender(self, nombre_producto: str) -> str:
         resultado = ""
         producto_vender = None
-        msn_error = ""
         for producto in self.__lista_productos:
             if producto.nombre == nombre_producto:
                 producto_vender = producto
@@ -38,34 +37,32 @@ class Heladeria:
             if len(lista_ingredientes) > 0:
                 for ingrediente in lista_ingredientes:
                     "Validamos para cada ingrediente el inventario"
-                    if ingrediente.ingrediente.sabor is not None and ingrediente.ingrediente.inventario < 1:
+                    if ingrediente.sabor is not None and ingrediente.inventario < 1:
                         ingredientes_completos = False
-                        lista_ingredientes_sin_inventario.append(ingrediente.ingrediente.nombre)
-                    if ingrediente.ingrediente.sabor is None and ingrediente.ingrediente.inventario < 0.2:
+                        lista_ingredientes_sin_inventario.append(ingrediente.nombre)
+                    if ingrediente.sabor is None and ingrediente.inventario < 0.2:
                         ingredientes_completos = False
-                        lista_ingredientes_sin_inventario.append(ingrediente.ingrediente.nombre)
+                        lista_ingredientes_sin_inventario.append(ingrediente.nombre)
 
                 if ingredientes_completos:
                     "Como los ingredientes cumplen el inventario, entonces descontamos."
                     for ingrediente in lista_ingredientes:
                         "Descontamos del inventario"
-                        if ingrediente.ingrediente.sabor is not None and ingrediente.ingrediente.inventario >= 1:
-                            ingrediente.ingrediente.inventario = (ingrediente.ingrediente.inventario - 1)
-                        if ingrediente.ingrediente.sabor is None and ingrediente.ingrediente.inventario >= 0.2:
-                            ingrediente.ingrediente.inventario = (ingrediente.ingrediente.inventario - 0.2)
+                        if ingrediente.sabor is not None and ingrediente.inventario >= 1:
+                            ingrediente.inventario = (ingrediente.inventario - 1)
+                        if ingrediente.sabor is None and ingrediente.inventario >= 0.2:
+                            ingrediente.inventario = (ingrediente.inventario - 0.2)
                     db.session.commit()
                     self.__venta_del_dia = self.__venta_del_dia + producto_vender.precio
                     resultado = "¡Vendido!"
                 else:
-                    msn_error = "¡Oh no! Nos hemos quedado sin: {0}".format(lista_ingredientes_sin_inventario)
-                    raise ValueError(msn_error)
+                    raise ValueError("¡Oh no! Nos hemos quedado sin: {0}".format(lista_ingredientes_sin_inventario))
             else:
-                msn_error = "El producto no tiene ingredientes asignados."
-                raise ValueError(msn_error)
+                raise ValueError("El producto no tiene ingredientes asignados.")
 
         return resultado
 
-    def lista_productos(self):
+    def lista_productos(self) -> list:
         productos = Productos.query.all()
         for item in productos:
             if item.vaso is None:
@@ -74,7 +71,7 @@ class Heladeria:
                 item.volumen = "0"
         return productos
 
-    def lista_ingredientes(self):
+    def lista_ingredientes(self) -> list:
         ingredientes = Ingredientes.query.all()
         for item in ingredientes:
             if item.vegetariano:

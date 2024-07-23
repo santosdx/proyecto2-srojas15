@@ -36,8 +36,11 @@
     </tbody>
 </table>
 
+<p>
+<a href="{{ url_for('lst_productos') }}" >Productos</a> |
 <a href="{{ url_for('lst_ingredientes') }}" >Ingredientes</a>
-<br><br>
+</p>
+
 <form action="/heladeria" method="post">
     <table>
         <thead>
@@ -48,7 +51,7 @@
         </thead>
         <tbody>
         <tr>
-            <td><label for="idProducto">Id producto:</label></td>
+            <td><b><label for="idProducto">Id producto:</label></b></td>
             <td><input type="text" name="idProducto" id="idProducto" required></td>
         </tr>
         <tr>

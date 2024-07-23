@@ -25,14 +25,12 @@ class HeladeriaController(Resource):
             venta = Venta(producto_vender, resultado_venta, id_transaccion, valor_venta)
             return make_response(render_template("heladeria.html", venta=venta))
 
-        print("id:", id_producto)
         heladeria = Heladeria("La Heladeria")
 
         lista_productos = heladeria.lista_productos()
         for producto in lista_productos:
             if producto.id == id_producto:
                 producto_vender = producto
-                print("nombre:", producto_vender.nombre)
                 break
         if producto_vender is not None:
             try:
@@ -42,7 +40,6 @@ class HeladeriaController(Resource):
                 resultado_venta = ex
         else:
             resultado_venta = "Ooops! el ID:{0} de producto no existe.".format(request.form['idProducto'])
-            print(resultado_venta)
 
         venta = Venta(producto_vender, resultado_venta, id_transaccion, valor_venta)
         return make_response(render_template("heladeria.html", venta=venta))

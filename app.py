@@ -28,11 +28,20 @@ api = Api(app)
 def main():
     return "Bienvenidos..."
 
+
 @app.route("/index")
 def menu():
     heladeria = Heladeria("La Heladeria")
     items = heladeria.lista_productos()
     return render_template("index.html", items=items)
+
+
+@app.route("/productos")
+def lst_productos():
+    heladeria = Heladeria("La Heladeria")
+    items = heladeria.lista_productos()
+    return render_template("productos.html", items=items)
+
 
 @app.route("/ingredientes")
 def lst_ingredientes():

@@ -10,18 +10,18 @@ class Productos(db.Model):
     vaso = db.Column(db.String(), nullable=True)
     volumen = db.Column(db.Integer(), nullable=True)
 
-    ingredientes = db.relationship('ProductosIngredientes', backref="ingredientes", lazy=True)
+    ingredientes = db.relationship('Ingredientes', secondary='productos_ingredientes', lazy='subquery', backref=db.backref('productos', lazy=True))
 
     def __init__(self, nombre: str, precio: float, vaso: str,  volumen: int, ingredientes: list):
         self.nombre = nombre
         self.precio = precio
         self.vaso = vaso
         self.volumen = volumen
-        self.lst_ingredientes = ingredientes
+        self.ingredientes = ingredientes
 
     def calcular_calorias(self) -> float:
         lista_calorias = []
-        for ingrediente in self.lst_ingredientes:
+        for ingrediente in self.ingredientes:
             lista_calorias.append(ingrediente.calorias)
         if self.vaso is None:
             '''Malteada'''
@@ -33,10 +33,10 @@ class Productos(db.Model):
     def calcular_costo(self) -> float:
         if self.vaso is None:
             '''Malteada'''
-            return funciones.producto_costo_produccion(self.lst_ingredientes) + 500
+            return funciones.producto_costo_produccion(self.ingredientes) + 500
         else:
             '''Copa'''
-            return funciones.producto_costo_produccion(self.lst_ingredientes)
+            return funciones.producto_costo_produccion(self.ingredientes)
 
     def calcular_rentabilidad(self):
-        return funciones.producto_rentabilidad(self.precio, self.lst_ingredientes)
+        return funciones.producto_rentabilidad(self.precio, self.ingredientes)
